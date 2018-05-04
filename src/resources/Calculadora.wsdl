@@ -17,14 +17,83 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="restar">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="args0" type="xs:int"/>
+                        <xs:element minOccurs="0" name="args1" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="restarResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="multiplicar">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="args0" type="xs:int"/>
+                        <xs:element minOccurs="0" name="args1" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="multiplicarResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="dividir">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="args0" type="xs:int"/>
+                        <xs:element minOccurs="0" name="args1" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="dividirResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
         </xs:schema>
   </wsdl:types>
+  <wsdl:message name="dividirResponse">
+    <wsdl:part name="parameters" element="ns:dividirResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="multiplicarRequest">
+    <wsdl:part name="parameters" element="ns:multiplicar">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="sumarRequest">
     <wsdl:part name="parameters" element="ns:sumar">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="sumarResponse">
     <wsdl:part name="parameters" element="ns:sumarResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="multiplicarResponse">
+    <wsdl:part name="parameters" element="ns:multiplicarResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="dividirRequest">
+    <wsdl:part name="parameters" element="ns:dividir">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="restarRequest">
+    <wsdl:part name="parameters" element="ns:restar">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="restarResponse">
+    <wsdl:part name="parameters" element="ns:restarResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="CalculadoraPortType">
@@ -34,11 +103,56 @@
       <wsdl:output message="ns:sumarResponse" wsaw:Action="urn:sumarResponse">
     </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="restar">
+      <wsdl:input message="ns:restarRequest" wsaw:Action="urn:restar">
+    </wsdl:input>
+      <wsdl:output message="ns:restarResponse" wsaw:Action="urn:restarResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="multiplicar">
+      <wsdl:input message="ns:multiplicarRequest" wsaw:Action="urn:multiplicar">
+    </wsdl:input>
+      <wsdl:output message="ns:multiplicarResponse" wsaw:Action="urn:multiplicarResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="dividir">
+      <wsdl:input message="ns:dividirRequest" wsaw:Action="urn:dividir">
+    </wsdl:input>
+      <wsdl:output message="ns:dividirResponse" wsaw:Action="urn:dividirResponse">
+    </wsdl:output>
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="CalculadoraSoap12Binding" type="ns:CalculadoraPortType">
     <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="sumar">
       <soap12:operation soapAction="urn:sumar" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="restar">
+      <soap12:operation soapAction="urn:restar" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="multiplicar">
+      <soap12:operation soapAction="urn:multiplicar" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="dividir">
+      <soap12:operation soapAction="urn:dividir" style="document"/>
       <wsdl:input>
         <soap12:body use="literal"/>
       </wsdl:input>
@@ -58,11 +172,65 @@
         <mime:content part="sumar" type="text/xml"/>
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="restar">
+      <http:operation location="Calculadora/restar"/>
+      <wsdl:input>
+        <mime:content part="restar" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="restar" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="multiplicar">
+      <http:operation location="Calculadora/multiplicar"/>
+      <wsdl:input>
+        <mime:content part="multiplicar" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="multiplicar" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="dividir">
+      <http:operation location="Calculadora/dividir"/>
+      <wsdl:input>
+        <mime:content part="dividir" type="text/xml"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="dividir" type="text/xml"/>
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="CalculadoraSoap11Binding" type="ns:CalculadoraPortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="sumar">
       <soap:operation soapAction="urn:sumar" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="restar">
+      <soap:operation soapAction="urn:restar" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="multiplicar">
+      <soap:operation soapAction="urn:multiplicar" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="dividir">
+      <soap:operation soapAction="urn:dividir" style="document"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
